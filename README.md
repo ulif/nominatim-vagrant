@@ -1,2 +1,5 @@
 # nominatim-vagrant
-A vagrant boxes running OSM nominatim
+
+Vagrant boxes running OSM nominatim
+
+
