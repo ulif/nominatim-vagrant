@@ -9,10 +9,10 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
 
   checkout = "yes"
-  #if ENV['CHECKOUT'] != 'y' then
-  #    config.vm.synced_folder "./Nominatim", "/home/vagrant/Nominatim"
-  #    checkout = "no"
-  #end
+  if ENV['CHECKOUT'] != 'y' then
+      config.vm.synced_folder "./Nominatim", "/home/vagrant/Nominatim"
+      checkout = "no"
+  end
 
   config.vm.define "ubuntu", primary: true do |sub|
       sub.vm.box = "bento/ubuntu-16.04"
