@@ -16,11 +16,11 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "ubuntu", primary: true do |sub|
       sub.vm.box = "bento/ubuntu-16.04"
-      #sub.vm.provision :shell do |s|
-      #  s.path = "Nominatim/vagrant/install-on-ubuntu-16.sh"
-      #  s.privileged = false
-      #  s.args = [checkout]
-      #end
+      sub.vm.provision :shell do |s|
+        s.path = "Nominatim/vagrant/install-on-ubuntu-16.sh"
+        s.privileged = false
+        s.args = [checkout]
+      end
       #sub.vm.provision "ansible" do |ansible|
       #  ansible.verbose = "v"
       #  ansible.playbook = "provision.yml"
