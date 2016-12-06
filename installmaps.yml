@@ -1,0 +1,75 @@
+# Ansible playbook to install OSM nomiatim maps
+# in local Ubuntu 16.04 vagrant box.
+#
+# This is the map install which requires an already
+# running nominatim server/database.
+# Following loosely:
+#
+#   https://github.com/twain47/Nominatim/blob/master/docs/Import_and_update.md
+#
+# Currently we import the data set of Monaco (for testing)
+---
+- hosts: all
+  become: yes
+  remote_user: root
+  vars:
+    nominatim_dir: '/home/vagrant/Nominatim'
+  tasks:
+  - name: Check if `Nominatim` dir exists
+    stat:
+      path: "{{ nominatim_dir }}"
+    register: nominatim_dir_st
+  - name: Update cache if not done in last 24 hours.
+    apt: update_cache=yes cache_valid_time=86400
+
+  - name: Install system packages
+    package:
+      name={{ item }}
+      state=present
+    with_items:
+      - aptitude
+
+  - name: Aptitude safe-upgrade
+    apt: upgrade=safe
+
+  - name: Checkout Nominatim (if it does not exist)
+    become: no
+    git:
+      repo: 'https://github.com/twain47/Nominatim.git'
+      dest: "{{ nominatim_dir }}"
+    when: nominatim_dir_st is defined and not nominatim_dir_st.stat.exists
+
+  - name: Create build/ dir
+    become: no
+    file:
+      path: /home/vagrant/data
+      state: directory
+
+  - name: Get map data [monaco]
+    become: no
+    get_url:
+      url: http://download.geofabrik.de/europe/monaco-latest.osm.pbf
+      dest: /home/vagrant/data/monaco.osm.pbf
+
+  - name: Remove old data
+    become: no
+    shell: dropdb --if-exists nominatim
+
+  - name: Setup [monaco]
+    become: no
+    shell: ./utils/setup.php --osm-file ../data/monaco.osm.pbf --osm2pgsql-cache 1000 --all 2>&1 | tee monaco.$$.log
+    args:
+      chdir: /home/vagrant/build
+
+  - name: Build special phrases [monaco]
+    become: no
+    shell: ./utils/specialphrases.php --wiki-import > ../data/specialphrases.sql
+    args:
+      chdir: /home/vagrant/build
+      creates: /home/vagrant/data/specialphrases.sql
+
+  - name: Process SQL [monaco]
+    become: no
+    shell: psql -d nominatim -f ../data/specialphrases.sql
+    args:
+      chdir: /home/vagrant/build
