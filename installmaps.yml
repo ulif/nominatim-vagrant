@@ -7,13 +7,16 @@
 #
 #   https://github.com/twain47/Nominatim/blob/master/docs/Import_and_update.md
 #
-# Currently we import the data set of Monaco (for testing)
+# The set of countries to install is set in var `countries` below.
+# It must be available at http://download.geofabrik.de/europe/.
+#
 ---
 - hosts: all
   become: yes
   remote_user: root
   vars:
     nominatim_dir: '/home/vagrant/Nominatim'
+    countries: ['monaco', 'andorra']
   tasks:
   - name: Check if `Nominatim` dir exists
     stat:
@@ -45,30 +48,32 @@
       path: /home/vagrant/data
       state: directory
 
-  - name: Get map data [monaco]
+  - name: Get map data [{{ item }}]
     become: no
     get_url:
-      url: http://download.geofabrik.de/europe/monaco-latest.osm.pbf
-      dest: /home/vagrant/data/monaco.osm.pbf
+      url: http://download.geofabrik.de/europe/"{{ item }}"-latest.osm.pbf
+      dest: /home/vagrant/data/"{{ item }}".osm.pbf
+    with_items: "{{ countries }}"
 
   - name: Remove old data
     become: no
     shell: dropdb --if-exists nominatim
 
-  - name: Setup [monaco]
+  - name: Setup ["{{ item }}"]
     become: no
-    shell: ./utils/setup.php --osm-file ../data/monaco.osm.pbf --osm2pgsql-cache 1000 --all 2>&1 | tee monaco.$$.log
+    shell: ./utils/setup.php --osm-file ../data/"{{ item }}".osm.pbf --osm2pgsql-cache 1000 --all 2>&1 | tee "{{ item }}".$$.log
     args:
       chdir: /home/vagrant/build
+    with_items: "{{ countries }}"
 
-  - name: Build special phrases [monaco]
+  - name: Build special phrases
     become: no
     shell: ./utils/specialphrases.php --wiki-import > ../data/specialphrases.sql
     args:
       chdir: /home/vagrant/build
       creates: /home/vagrant/data/specialphrases.sql
 
-  - name: Process SQL [monaco]
+  - name: Process SQL
     become: no
     shell: psql -d nominatim -f ../data/specialphrases.sql
     args:
