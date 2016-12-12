@@ -51,8 +51,8 @@
   - name: Get map data [{{ item }}]
     become: no
     get_url:
-      url: http://download.geofabrik.de/europe/"{{ item }}"-latest.osm.pbf
-      dest: /home/vagrant/data/"{{ item }}".osm.pbf
+      url: "http://download.geofabrik.de/europe/{{ item }}-latest.osm.pbf"
+      dest: "/home/vagrant/data/{{ item }}.osm.pbf"
     with_items: "{{ countries }}"
 
   - name: Remove old data
@@ -61,7 +61,7 @@
 
   - name: Setup ["{{ item }}"]
     become: no
-    shell: ./utils/setup.php --osm-file ../data/"{{ item }}".osm.pbf --osm2pgsql-cache 1000 --all 2>&1 | tee "{{ item }}".$$.log
+    shell: ./utils/setup.php --osm-file "../data/{{ item }}.osm.pbf" --osm2pgsql-cache 1000 --all 2>&1 | tee "{{ item }}.$$.log"
     args:
       chdir: /home/vagrant/build
     with_items: "{{ countries }}"
