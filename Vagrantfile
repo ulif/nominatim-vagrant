@@ -10,6 +10,7 @@ Vagrant.configure(2) do |config|
 
   checkout = "yes"
   if ENV['CHECKOUT'] != 'y' then
+      # config.vm
       config.vm.synced_folder "./Nominatim", "/home/vagrant/Nominatim"
       checkout = "no"
   end
@@ -21,10 +22,10 @@ Vagrant.configure(2) do |config|
       s.privileged = false
       s.args = [checkout]
     end
-    #sub.vm.provision "ansible" do |ansible|
-    #  ansible.verbose = "v"
-    #  ansible.playbook = "provision.yml"
-    #end
+    sub.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "installmaps.yml"
+    end
   end
 
   config.vm.provider "virtualbox" do |vb|
