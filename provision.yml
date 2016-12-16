@@ -1,0 +1,26 @@
+# Ansible playbook to install OSM nomiatim server
+# in local Ubuntu 16.04 vagrant box.
+#
+# This is the basic install (no real map data (yet))
+# Following loosely:
+#
+#   https://github.com/twain47/Nominatim/blob/master/docs/install-on-ubuntu-16.md
+#
+---
+- hosts: all
+  become: yes
+  remote_user: root
+  tasks:
+  - name: Update package cache if not done in last 24 hours.
+    apt: update_cache=yes cache_valid_time=86400
+
+  - name: Install system packages
+    package:
+      name={{ item }}
+      state=present
+    with_items:
+      - aptitude
+
+  - name: Aptitude safe-upgrade
+    apt: upgrade=safe
+
