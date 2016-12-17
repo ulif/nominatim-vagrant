@@ -12,7 +12,7 @@
   remote_user: root
   vars:
     # do you want test packages installed (additionally)?
-    install_test_packages: true
+    install_test_packages: false
   tasks:
   - name: Update package cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
