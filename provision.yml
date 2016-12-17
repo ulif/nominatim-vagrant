@@ -85,3 +85,9 @@
       - "six==1.7"
       - "haversine"
     when: install_test_packages
+
+  - name: Install php codesniffer if test_suite is wanted
+    pear:
+      name: PHP_CodeSniffer
+      state: present
+    when: install_test_packages
