@@ -8,29 +8,35 @@
 #
 ---
 - hosts: all
-  become: yes
-  remote_user: root
+  become: no
   vars:
     # do you want test packages installed (additionally)?
     install_test_packages: false
+    # username to install nominatim as
+    username: "{{ ansible_ssh_user }}"
+    userhome: "/home/{{ username }}"
   tasks:
   - name: Update package cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
+    become: yes
 
   - name: Install system packages
     package:
       name={{ item }}
       state=present
+    become: yes
     with_items:
       - aptitude
 
   - name: Aptitude safe-upgrade
     apt: upgrade=safe
+    become: yes
 
   - name: Install all packages needed for Nominatim
     apt:
       name: "{{ item }}"
       state: present
+    become: yes
     with_items:
       - build-essential
       - cmake
@@ -61,6 +67,7 @@
     apt:
       name: "{{ item }}"
       state: present
+    become: yes
     when: install_test_packages
     with_items:
       - python-dev
@@ -90,4 +97,6 @@
     pear:
       name: PHP_CodeSniffer
       state: present
+    become: yes
     when: install_test_packages
+
