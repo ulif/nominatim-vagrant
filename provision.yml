@@ -73,3 +73,13 @@
       - python-tidylib
       - python-numpy
       - phpunit
+
+  - name: Install additional python packages to run test suite
+    pip:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "lettuce==0.2.18"
+      - "six==1.7"
+      - "haversine"
+    when: install_test_packages
