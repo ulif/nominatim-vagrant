@@ -75,9 +75,11 @@
       - phpunit
 
   - name: Install additional python packages to run test suite
+    become: no
     pip:
       name: "{{ item }}"
       state: present
+      extra_args: "--user"
     with_items:
       - "lettuce==0.2.18"
       - "six==1.7"
