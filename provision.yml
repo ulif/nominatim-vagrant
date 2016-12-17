@@ -10,6 +10,9 @@
 - hosts: all
   become: yes
   remote_user: root
+  vars:
+    # do you want test packages installed (additionally)?
+    install_test_packages: true
   tasks:
   - name: Update package cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
@@ -53,3 +56,20 @@
       - php-pear
       - php-db
       - git
+
+  - name: Install additional packages to run the test suite
+    apt:
+      name: "{{ item }}"
+      state: present
+    when: install_test_packages
+    with_items:
+      - python-dev
+      - python-pip
+      - python-levenshtein
+      - python-shapely
+      - python-psycopg2
+      - tidy
+      - python-nose
+      - python-tidylib
+      - python-numpy
+      - phpunit
