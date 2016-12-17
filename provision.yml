@@ -24,3 +24,32 @@
   - name: Aptitude safe-upgrade
     apt: upgrade=safe
 
+  - name: Install all packages needed for Nominatim
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - build-essential
+      - cmake
+      - g++
+      - libboost-dev
+      - libboost-system-dev
+      - libboost-filesystem-dev
+      - libexpat1-dev
+      - zlib1g-dev
+      - libxml2-dev
+      - libbz2-dev
+      - libpq-dev
+      - libgeos-dev
+      - libgeos++-dev
+      - libproj-dev
+      - postgresql-server-dev-9.5
+      - postgresql-9.5-postgis-2.2
+      - postgresql-contrib-9.5
+      - apache2
+      - php
+      - php-pgsql
+      - libapache2-mod-php
+      - php-pear
+      - php-db
+      - git
