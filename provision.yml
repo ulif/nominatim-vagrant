@@ -6,6 +6,9 @@
 #
 #   https://github.com/twain47/Nominatim/blob/master/docs/install-on-ubuntu-16.md
 #
+# This script requires an existent user on the target system. You can set the
+# user and userhome below. 
+#
 ---
 - hosts: all
   #  Do not set this to "yes". This would break `username` determination below.
@@ -100,9 +103,3 @@
       state: present
     become: yes
     when: install_test_packages
-
-  - name: add user (if it does not exist)
-    user:
-      name: "{{ username }}"
-      home: "{{ userhome  }}"
-      state: present
