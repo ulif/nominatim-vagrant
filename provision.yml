@@ -7,7 +7,7 @@
 #   https://github.com/twain47/Nominatim/blob/master/docs/install-on-ubuntu-16.md
 #
 # This script requires an existent user on the target system. You can set the
-# user and userhome below. 
+# user and userhome below.
 #
 ---
 - hosts: all
