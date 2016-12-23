@@ -8,13 +8,6 @@ Vagrant.configure(2) do |config|
   # If true, then any SSH connections made will enable agent forwarding.
   config.ssh.forward_agent = true
 
-  checkout = "yes"
-  if ENV['CHECKOUT'] != 'y' then
-      # config.vm
-      config.vm.synced_folder "./Nominatim", "/home/vagrant/Nominatim"
-      checkout = "no"
-  end
-
   config.vm.define "ubuntu", primary: true do |sub|
     sub.vm.box = "bento/ubuntu-16.04"
     sub.vm.provision "ansible" do |ansible|
