@@ -117,3 +117,10 @@
       name: "{{ username }}"
       role_attr_flags: SUPERUSER
       state: present
+
+  - name: Copy over apache config
+    become: yes
+    template:
+      src: apache_nominatim.conf
+      dest: /etc/apache2/conf-available/nominatim.conf
+      owner: root
