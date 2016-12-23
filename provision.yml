@@ -103,3 +103,11 @@
       state: present
     become: yes
     when: install_test_packages
+
+  - name: Create postgres user {{ username }}
+    become: yes
+    become_user: postgres
+    postgresql_user:
+      name: "{{ username }}"
+      role_attr_flags: SUPERUSER
+      state: present
