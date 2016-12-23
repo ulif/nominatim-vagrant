@@ -104,6 +104,12 @@
     become: yes
     when: install_test_packages
 
+  - name: Restart postgres
+    become: yes
+    service:
+      name: postgresql
+      state: restarted
+
   - name: Create postgres user {{ username }}
     become: yes
     become_user: postgres
