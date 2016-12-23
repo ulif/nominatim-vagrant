@@ -128,3 +128,5 @@
   - name: Enable new apache config
     become: yes
     shell: /usr/sbin/a2enconf nominatim
+    args:
+      creates: /etc/apache2/conf-enabled/nominatim.conf
