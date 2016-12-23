@@ -124,3 +124,7 @@
       src: apache_nominatim.conf
       dest: /etc/apache2/conf-available/nominatim.conf
       owner: root
+
+  - name: Enable new apache config
+    become: yes
+    shell: /usr/sbin/a2enconf nominatim
