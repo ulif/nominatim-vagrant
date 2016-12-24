@@ -66,6 +66,7 @@
       - php-pear
       - php-db
       - git
+      - python-psycopg2
 
   - name: Install additional packages to run the test suite
     apt:
@@ -78,7 +79,6 @@
       - python-pip
       - python-levenshtein
       - python-shapely
-      - python-psycopg2
       - tidy
       - python-nose
       - python-tidylib
