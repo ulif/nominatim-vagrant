@@ -130,3 +130,9 @@
     shell: /usr/sbin/a2enconf nominatim
     args:
       creates: /etc/apache2/conf-enabled/nominatim.conf
+
+  - name: Clone nominatim from github
+    git:
+      repo: git://github.com/twain47/Nominatim.git
+      dest: "{{ userhome }}/Nominatim"
+      update: yes
