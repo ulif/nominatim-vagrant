@@ -25,6 +25,11 @@
     service:
       name: postgresql
       state: restarted
+  - name: Restart apache server
+    become: yes
+    service:
+      name: apache2
+      state: restarted
 
   tasks:
   - name: Update package cache if not done in last 24 hours.
@@ -131,6 +136,7 @@
     shell: /usr/sbin/a2enconf nominatim
     args:
       creates: /etc/apache2/conf-enabled/nominatim.conf
+    notify: Restart apache server
 
   - name: Clone nominatim from github to {{ userhome }}
     git:
