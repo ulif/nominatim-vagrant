@@ -137,3 +137,8 @@
       dest: "{{ userhome }}/Nominatim"
       recursive: yes
       update: yes
+
+  - name: Create build dir {{ userhome }}/build/
+    file:
+      path: "{{ userhome }}/build"
+      state: directory
