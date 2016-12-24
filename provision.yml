@@ -131,8 +131,9 @@
     args:
       creates: /etc/apache2/conf-enabled/nominatim.conf
 
-  - name: Clone nominatim from github
+  - name: Clone nominatim from github to {{ userhome }}
     git:
       repo: git://github.com/twain47/Nominatim.git
       dest: "{{ userhome }}/Nominatim"
+      recursive: yes
       update: yes
