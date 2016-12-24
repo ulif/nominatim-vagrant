@@ -19,6 +19,13 @@
     # username to install nominatim as
     username: "{{ ansible_ssh_user }}"
     userhome: "/home/{{ username }}"
+  handlers:
+  - name: Restart postgres server
+    become: yes
+    service:
+      name: postgresql
+      state: restarted
+
   tasks:
   - name: Update package cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
@@ -103,12 +110,6 @@
       state: present
     become: yes
     when: install_test_packages
-
-  - name: Restart postgres
-    become: yes
-    service:
-      name: postgresql
-      state: restarted
 
   - name: Create postgres user {{ username }}
     become: yes
