@@ -157,3 +157,9 @@
       chdir: "{{ userhome }}/build/"
     when: git_clone.changed
 
+  - name: Run `make` in {{ userhome }}/build/ (this can take several minutes)
+    command: /usr/bin/make
+    args:
+      chdir: "{{ userhome }}/build/"
+    when: git_clone.changed
+
