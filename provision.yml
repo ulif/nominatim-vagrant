@@ -150,3 +150,10 @@
     file:
       path: "{{ userhome }}/build"
       state: directory
+
+  - name: Build nominatim in {{ userhome }}/build/
+    command: /usr/bin/cmake "{{ userhome }}/Nominatim"
+    args:
+      chdir: "{{ userhome }}/build/"
+    when: git_clone.changed
+
