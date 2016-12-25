@@ -163,3 +163,8 @@
       chdir: "{{ userhome }}/build/"
     when: git_clone.changed
 
+  - name: Copy over local.php template
+    template:
+      src: templates/local.php
+      dest: "{{ userhome }}/build/settings/local.php"
+
