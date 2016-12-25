@@ -144,6 +144,7 @@
       dest: "{{ userhome }}/Nominatim"
       recursive: yes
       update: yes
+    register: git_clone
 
   - name: Create build dir {{ userhome }}/build/
     file:
