@@ -3,16 +3,15 @@
 Vagrant boxes running OSM nominatim
 
 
-## Install
+## Install Nominatim
 
 Clone this repository:
 
     $ git clone https://github.com/ulif/nominatim-vagrant
 
-Then change into the created repository and clone `Nominatim` inside it:
+Then change into the created repository:
 
     $ cd nominatim-vagrant/
-    $ git clone --recursive https://github.com/twain47/Nominatim.git
 
 The local `Vagrantfile` first configures a vagrant box based on Ubuntu 16.04,
 installs databases, apache, etc. and then runs the local `installmaps.yml`
