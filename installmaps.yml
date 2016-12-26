@@ -40,7 +40,7 @@
   - name: Create data/ dir
     become: no
     file:
-      path: /home/vagrant/data
+      path: "{{ userhome }}/data"
       state: directory
 
   - name: Download map data for [{{ item.key }}]
@@ -58,18 +58,18 @@
     become: no
     shell: ./utils/setup.php --osm-file "../data/{{ item.key }}.osm.pbf" --osm2pgsql-cache 1000 --all 2>&1 | tee "{{ item.key }}.$$.log"
     args:
-      chdir: /home/vagrant/build
+      chdir: "{{ userhome }}/build"
     with_dict: "{{ countries }}"
 
   - name: Build special phrases
     become: no
     shell: ./utils/specialphrases.php --wiki-import > ../data/specialphrases.sql
     args:
-      chdir: /home/vagrant/build
-      creates: /home/vagrant/data/specialphrases.sql
+      chdir: "{{ userhome }}/build"
+      creates: "{{ userhome }}/data/specialphrases.sql"
 
   - name: Process SQL
     become: no
     shell: psql -d nominatim -f ../data/specialphrases.sql
     args:
-      chdir: /home/vagrant/build
+      chdir: "{{ userhome }}/build"
