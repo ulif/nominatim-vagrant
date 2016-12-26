@@ -79,6 +79,7 @@
       - php-db
       - git
       - python-psycopg2
+      - acl     #  for safe privilege escalation with ansible
 
   - name: Install additional packages to run the test suite
     apt:
