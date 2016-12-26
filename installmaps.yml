@@ -15,14 +15,14 @@
   become: yes
   remote_user: root
   vars:
-    nominatim_dir: '/home/vagrant/Nominatim'
+    username: "{{ ansible_ssh_user }}"
+    userhome: "/home/{{ username }}"
+    # the countries and their continent must exist on download.geofabrik.de
     countries:
         monaco:
             continent: "europe"
         andorra:
             continent: "europe"
-    username: "{{ ansible_ssh_user }}"
-    userhome: "/home/{{ username }}"
   tasks:
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
