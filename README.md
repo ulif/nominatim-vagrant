@@ -3,7 +3,7 @@
 Vagrant boxes running OSM nominatim
 
 
-## Install Nominatim
+## Installing Nominatim
 
 Clone this repository:
 
@@ -17,15 +17,6 @@ The local `Vagrantfile` first configures a vagrant box based on Ubuntu 16.04,
 installs databases, apache, etc. and then runs the local `installmaps.yml`
 ansible playbook.installs map data from different countries.
 
-The set of countries to be installed can be set at top of `installmaps.yml`.
-
-Therefore, edit `installmaps.yml`:
-
-    $ nano installmaps.yml
-
-The nominatim service will be routed from vagrant port 80 to port 8089 of the
-host. Edit `Vagrantfile` if you prefer a different port or similar.
-
 Fire up vagrant:
 
     $ vagrant up ubuntu
@@ -34,6 +25,28 @@ This will take a remarkable amount of time, but in the end should give you a
 running `virtualbox` where you can log into:
 
     $ vagrant ssh ubuntu
+
+The database will exist but be _empty_ after this step.
+
+
+## Installing maps
+
+The desired set of countries, the available memory and other important values
+can be set at top of `installmaps.yml`. Edit this file:
+
+    $ nano installmaps.yml
+
+Then, run the playbook. In a vagrant machine this can be done manually like
+this:
+
+    $ ansible-playbook --private-key=.vagrant/machines/ubuntu/virtualbox/private_key -u vagrant -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory installmaps.yml
+
+This step will run for a very, very, very long time, depending on the country
+you picked above. Larger datasets like europe or the world will take several
+days even on strong machines with lots of RAM.
+
+The nominatim service will be routed from vagrant port 80 to port 8089 of the
+host. Edit `Vagrantfile` if you prefer a different port or similar.
 
 Before proceeding, these steps must have been finished successfully.
 
