@@ -17,6 +17,8 @@
   vars:
     nominatim_dir: '/home/vagrant/Nominatim'
     countries: ['monaco', 'andorra']
+    username: "{{ ansible_ssh_user }}"
+    userhome: "/home/{{ username }}"
   tasks:
   - name: Check if `Nominatim` dir exists
     stat:
