@@ -20,11 +20,6 @@
     username: "{{ ansible_ssh_user }}"
     userhome: "/home/{{ username }}"
   tasks:
-  - name: Check if `Nominatim` dir exists
-    stat:
-      path: "{{ nominatim_dir }}"
-    register: nominatim_dir_st
-
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
 
@@ -38,14 +33,7 @@
   - name: Aptitude safe-upgrade
     apt: upgrade=safe
 
-  - name: Checkout Nominatim (if it does not exist)
-    become: no
-    git:
-      repo: 'https://github.com/twain47/Nominatim.git'
-      dest: "{{ nominatim_dir }}"
-    when: nominatim_dir_st is defined and not nominatim_dir_st.stat.exists
-
-  - name: Create build/ dir
+  - name: Create data/ dir
     become: no
     file:
       path: /home/vagrant/data
