@@ -24,6 +24,7 @@
     stat:
       path: "{{ nominatim_dir }}"
     register: nominatim_dir_st
+
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
 
