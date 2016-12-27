@@ -5,6 +5,9 @@ Vagrant.configure(2) do |config|
   # Apache webserver
   config.vm.network "forwarded_port", guest: 80, host: 8089
 
+  # In case you want to share something
+  config.vm.synced_folder "./shared", "/home/vagrant/shared"
+
   # If true, then any SSH connections made will enable agent forwarding.
   config.ssh.forward_agent = true
 
