@@ -2,8 +2,22 @@
 
 Vagrant boxes running OSM nominatim
 
+via `ansible` playbooks.
 
-## Installing Nominatim
+Why?
+
+1) With the `ansible` playbooks given here you can do tasks in an idempotent
+   way. I.e.: you can rerun playbooks without the need to rerun every task, if
+   it was already finished.
+
+2) The `ansible` playbooks can serve for local vagrants and real remote
+   machines at the same time.
+
+   In fact I used the playbooks in here to setup `Nominatim` on real remote
+   machines (and for local vagrant boxes).
+
+
+## Installing Nominatim (in a vagrant box)
 
 Clone this repository:
 
@@ -22,11 +36,24 @@ Fire up vagrant:
     $ vagrant up ubuntu
 
 This will take a remarkable amount of time, but in the end should give you a
-running `virtualbox` where you can log into:
+running `virtualbox` ivagrant where you can ssh into:
 
     $ vagrant ssh ubuntu
 
 The database will exist but be _empty_ after this step.
+
+
+### Optional: Installing Nominatim on a Remote Host
+
+You can use the local `provision.yml` playbook for provisioning remote hosts
+(not vagrant) as well:
+
+    $ ansible-playbook -K -i my.remotehost.org, provision.yml
+
+Please note the colon after the hostname.
+
+This assumes, that you have SSH access (via keyfiles) to the remote host and
+can sudo entering a password. Ansible will ask you for the password.
 
 
 ## Installing maps
@@ -69,4 +96,10 @@ Of course you can also talk via commandline:
     "class":"building","type":"yes","importance":0.301}]
 
 Oh, and you need the map data of the country you query, of course.
+
+If you installed everything on a remote machine, go to
+
+    http://myremote.org/nominatim/
+
+which should show a running nominatim server.
 
