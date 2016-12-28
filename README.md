@@ -80,16 +80,16 @@ Before proceeding, these steps must have been finished successfully.
 
 ## Using Nominatim
 
-After install, the nominatim service is available at port 8089 of your host
-machine. You can browse to
+After vagrant install, the nominatim service is available at port 8089 of your
+host machine. You can browse to
 
   ` http://localhost:8089/nominatim/search.php
 
 to play with your new nominatim server.
 
-Of course you can also talk via commandline:
+Of course you can also talk to your nominatim server via commandline:
 
-    $ curl curl 'http://localhost:8089/nominatim/search.php?format=json&q=17,%20boulevard%20de%20suisse'
+    $ curl 'http://localhost:8089/nominatim/search.php?format=json&q=17,%20boulevard%20de%20suisse'
     [{"place_id":"100822","licence":"Data © OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright",
     "osm_type":"way","osm_id":"94399519","boundingbox":["43.7379492","43.7383593","7.4217809","7.4224633"],
     "lat":"43.7381542","lon":"7.42217981938168","display_name":"Rose de France, 17, Boulevard de Suisse, Monte-Carlo, Monaco, 98000, Monaco",
