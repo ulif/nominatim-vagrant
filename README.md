@@ -63,6 +63,13 @@ can be set at top of `installmaps.yml`. Edit this file:
 
     $ nano installmaps.yml
 
+Please note, that currently you can set only one map URL for indexing. Map data
+can normally be retrieved from
+
+    http://download.geofabrik.de/
+
+and offer different collections of map data from around the world.
+
 Then, run the playbook. In a vagrant machine this can be done manually like
 this:
 
