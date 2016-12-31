@@ -28,8 +28,9 @@ Then change into the created repository:
     $ cd nominatim-vagrant/
 
 The local `Vagrantfile` first configures a vagrant box based on Ubuntu 16.04,
-installs databases, apache, etc. and then runs the local `installmaps.yml`
-ansible playbook.installs map data from different countries.
+installs databases, apache, etc. using ``provision.yml``. You might want to
+tweak some settings in ``Vagrantfile`` and top of ``provision.yml`` before
+creating your vagrant box.
 
 Fire up vagrant:
 
@@ -109,4 +110,3 @@ If you installed everything on a remote machine, go to
     http://myremote.org/nominatim/
 
 which should show a running nominatim server.
-
