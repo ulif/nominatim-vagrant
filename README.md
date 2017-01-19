@@ -54,7 +54,9 @@ You can use the local `provision.yml` playbook for provisioning remote hosts
 Please note the colon after the hostname.
 
 This assumes, that you have SSH access (via keyfiles) to the remote host and
-can sudo entering a password. Ansible will ask you for the password.
+can sudo entering a password. Ansible will ask you for the sudoer-password.
+
+The remote host should be a Ubuntu 16.04 system.
 
 
 ## Installing maps
