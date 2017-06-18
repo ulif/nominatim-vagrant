@@ -4,7 +4,7 @@
 # This is the basic install (no real map data (yet))
 # Following loosely:
 #
-#   https://github.com/twain47/Nominatim/blob/master/docs/install-on-ubuntu-16.md
+#   https://github.com/openstreetmap/Nominatim/blob/master/docs/install-on-ubuntu-16.md
 #
 # This script requires an existent user on the target system. You can set the
 # user and userhome below.
