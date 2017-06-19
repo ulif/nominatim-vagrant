@@ -77,8 +77,8 @@
       - libapache2-mod-php
       - php-pear
       - php-db
+      - php-intl
       - git
-      - python-psycopg2
       - acl     #  for safe privilege escalation with ansible
 
   - name: Install additional packages to run the test suite
@@ -88,14 +88,10 @@
     become: yes
     when: install_test_packages
     with_items:
-      - python-dev
-      - python-pip
-      - python-levenshtein
-      - python-shapely
-      - tidy
-      - python-nose
-      - python-tidylib
-      - python-numpy
+      - python3-dev
+      - python3-pip
+      - python3-psycopg2
+      - python3-tidylib
       - phpunit
 
   - name: Install additional python packages to run test suite
@@ -104,10 +100,10 @@
       name: "{{ item }}"
       state: present
       extra_args: "--user"
+      executable: pip3
     with_items:
-      - "lettuce==0.2.18"
-      - "six==1.7"
-      - "haversine"
+      - "behave"
+      - "nose"
     when: install_test_packages
 
   - name: Install php codesniffer if test_suite is wanted
@@ -148,11 +144,16 @@
 
   - name: Clone nominatim from github to {{ userhome }}
     git:
-      repo: git://github.com/twain47/Nominatim.git
+      repo: git://github.com/openstreetmap/Nominatim.git
       dest: "{{ userhome }}/Nominatim"
       recursive: yes
       update: yes
     register: git_clone
+
+  - name: Get OSM country grid
+    get_url:
+      url: http://www.nominatim.org/data/country_grid.sql.gz
+      dest: "{{ userhome }}/Nominatim/data/country_osm_grid.sql.gz"
 
   - name: Create build dir {{ userhome }}/build/
     file:
