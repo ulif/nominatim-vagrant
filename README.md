@@ -66,6 +66,9 @@ can be set at top of `installmaps.yml`. Edit this file:
 
     $ nano installmaps.yml
 
+Edit the `vars` section, especially the `max_cache_mem` value that tells, how
+much memory there should be available for indexing/importing map data.
+
 Please note, that currently you can set only one map URL for indexing. Map data
 can normally be retrieved from
 
