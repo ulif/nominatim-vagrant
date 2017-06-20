@@ -17,13 +17,16 @@
   vars:
     username: "{{ ansible_ssh_user }}"
     userhome: "/home/{{ username }}"
-    # maximim memory in MB available for caching/indexing. Not more than 2/3 of RAM!
+    # IMPORTANT VALUE
+    # maximum memory in MB available for caching/indexing. Not more than 2/3 of RAM!
     max_cache_mem: 1024
     # the countries and their continent must exist on download.geofabrik.de
     # Note: currently we can hold only _one_ file.
     country_urls:
       # - http://download.geofabrik.de/europe/andorra-latest.osm.pbf
       - http://download.geofabrik.de/europe/monaco-latest.osm.pbf
+      ## Germany, Austria, Switzerland
+      # - http://download.geofabrik.de/europe/dach-latest.osm.pbf
   tasks:
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
